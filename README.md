@@ -9,25 +9,14 @@ This assigment requires teamwork. Your team can pick one from two topics:
 ## Requirements
 *For team assignment, only 1 member in the team should fork the repo. Then, admin can invite other members to contribute in the same repo. Remember to have develop branch before merging to main. Each feature/schema/bug/issue should have it's own branch, and 1 branch/file edition should be taken by only 1 member at a time. Before making any new branch, make sure you sync the fork and run `git pull` to avoid the conflicts with the parent repo. If neccessary, check the Git lecture again.*
 1. Create ERD diagram with proper entities, attributes, and relationship. The ERD can be added to the project as image.
-2. Design the API endpoints, following REST API architecture. The endpoints can be displayed as text with detail explaination. 
-
-For example:
-```
-Products API
-Base URL: https://example.com/api/v1/products
-- Get all products: [GET] `/`
-  Query Parameters
-  * sort (string, optional): Sort the products based on a specific field. Accepted values: name, price, created_at, updated_at.
-  * search (string, optional): Search for products by name or description.
-  * page (integer, optional): The page number for pagination.
-  * limit (integer, optional): The maximum number of products to include per page.
-- Get a product by id: [GET] `/:productId`
-- Create a product: [POST]: `/`
-  Example Request Body:
-  {
-  "name": "New Product",
-  "price": 39.99,
-  "description": "This is a new product"
-  }
-```
-4. Provide PostgreSQL queries for the basic CRUD operations
+2. Design the API endpoints, following REST API architecture. The endpoints can be displayed as text with detail explaination. You can use `.md` file or `.txt` file to write the API endpoints. It is necessary to describe all the possible queries, parameters, request body, authentication (if needed), and sample response for each endpoint. 
+4. Provide the endpoints and PostgreSQL queries for the basic CRUD operations:
+   - (for each table ) Create a function to get all items of a table with sorting, filtering, and pagination
+   - (for each table ) Create query to get 1 item of a table by id
+   - Create a function to update/delete book or product
+   - Register, authenticate,update, delete users
+   - CRUD operations for reviews
+   - Borrow/return books or place/cancel/ship oder for products
+   - Get the most 10 borrows or bought books or products
+   - All the update operation should have limitations on which properties can be updated
+   - Some endpoints should be allowed for certain users only
