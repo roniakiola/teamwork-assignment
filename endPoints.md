@@ -927,3 +927,105 @@ DELETE /books/:bookId/reviews/:reviewId
   "message": "Review is deleted successfully"
 }
 ```
+
+### Role endpoints
+#### Get all roles
+This endpoint is only allowed for librarian to query all roles from the database.
+```
+GET /roles?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+
+# Header
+{
+  "Authorization": "Bearer {token}"
+}
+
+# Response body
+[
+  {
+    "id": 1,
+    "role_name": "Librarian",
+  },
+  {
+    "id": 2,
+    "role_name": "Customer",
+  },
+  ...
+]
+```
+
+#### Get a role by id
+This endpoint is only allowed for librarian to query one specific role from the database.
+```
+GET /roles/:roleId
+
+# Header
+{
+  "Authorization": "Bearer {token}"
+}
+
+# Response body
+{
+  "id": 1,
+  "role_name": "Librarian",
+}
+```
+
+#### Create a role
+This endpoint is only allowed for librarian to add a new role to the database.
+```
+POST /roles
+
+# Header
+{
+  "Authorization": "Bearer {token}"
+}
+
+# Request body
+{
+  "role_name": "Librarian",
+}
+
+# Response body
+{
+  "id": 1,
+  "role_name": "Librarian",
+}
+```
+
+#### Update a role
+This endpoint is only allowed for librarian to update a role in the database.
+```
+PUT /roles/:roleId
+
+# Header
+{
+  "Authorization": "Bearer {token}"
+}
+
+# Request body
+{
+  "role_name": "Librarian",
+}
+
+# Response body
+{
+  "id": {roleId},
+  "role_name": "Librarian",
+}
+```
+
+#### Delete a role
+This endpoint is only allowed for librarian to delete a role from the database.
+```
+DELETE /roles/:roleId
+
+# Header
+{
+  "Authorization": "Bearer {token}"
+}
+
+# Response body
+{
+  "message": "Role is deleted successfully"
+}
+```
