@@ -1,4 +1,4 @@
-You are in team_2 fork - main branch.
+You are in team_2 fork - development branch.
 
 # Teamwork
 Designing REST API endpoints and database schema
