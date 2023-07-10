@@ -1,4 +1,4 @@
-You are in team_2 fork - main branch.
+You are in team_2 fork - Roni's branch testing.
 
 # Teamwork
 Designing REST API endpoints and database schema
