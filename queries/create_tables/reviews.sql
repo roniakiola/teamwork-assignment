@@ -8,12 +8,12 @@ CREATE TABLE IF NOT EXISTS public.reviews
     CONSTRAINT reviews_pkey PRIMARY KEY (id),
     CONSTRAINT book_id FOREIGN KEY (book_id)
         REFERENCES public.books (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         NOT VALID,
     CONSTRAINT user_id FOREIGN KEY (user_id)
         REFERENCES public.users (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         NOT VALID
 )

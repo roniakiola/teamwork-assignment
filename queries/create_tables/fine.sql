@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS public.fine
     CONSTRAINT fine_pkey PRIMARY KEY (id),
     CONSTRAINT loan_id FOREIGN KEY (loan_id)
         REFERENCES public.loans (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         NOT VALID
 );
