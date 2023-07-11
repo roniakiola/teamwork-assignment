@@ -20,9 +20,9 @@ AS $$
 BEGIN
   RETURN QUERY
   SELECT
-    books.*
-    FROM books
-    WHERE books.book_name ILIKE '%' || keyword || '%'
+    b.*
+    FROM books b
+    WHERE b.book_name ILIKE '%' || keyword || '%'
     ORDER BY sort_column || ' ' || sort_order
     LIMIT limit_rows OFFSET offset_rows;
 END;
