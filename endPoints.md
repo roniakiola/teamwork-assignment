@@ -5,9 +5,20 @@ http://example.com/api/v1
 
 ### Book endpoints
 #### Get all books
+This endpoint is used to query all books from the database.
 ```
 GET /books?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| keyword | string | Keyword to search for, default value is '' | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+
+```
 # Response body 
 [
   {
@@ -82,9 +93,16 @@ GET /books?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={re
 ```
 
 #### Get book by id
+This end point is used to query one specific book from the database.
 ```
 GET /books/:bookId
+``` 
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| bookId | string | ID of the book to query | Yes |
+
+```
 # Response body 
 {
     "id": 1,
@@ -122,15 +140,31 @@ GET /books/:bookId
 ```
 
 #### Create book
-This endpoint is only allowed for librarian to add a new book to the database.
+This endpoint is only allowed for librarian to add a new book to the database. 
 ```
 POST /books
-
+````
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
+The request body should contain the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| book_name | string | Name of the book, limited to 50 character | Yes |
+| isbn | string | ISBN of the book, limited to 13 characters | Yes |
+| author_ids | array of strings | All the IDs of the authors of the book | Yes |
+| genre_ids | array of strings | All the IDs of the genres of the book | Yes |
+| published_year | string | Publishing year of the book, limited to 4 characters | Yes |
+| description | string | Short summary of the book, limited to 1000 characters | Yes |
+| image_url | string | URL of the book cover image | Yes |
+| borrowing_period | string | Number of days that the user can borrow the book | Yes |
+| quantity | string | Number of copies of the book | Yes |
 
+```
 # Request body 
 {
   "book_name": "Catcher in the Rye",
@@ -143,7 +177,9 @@ POST /books
   "borrowing_period": 30,
   "quantity": 3
 }
+```
 
+```
 # Response body 
 {
   "book_id": 1,
@@ -160,14 +196,35 @@ POST /books
 ```
 
 #### Update book
+This endpoint is only allowed for librarian to update a book in the database.
 ```
 PUT /books/:bookId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| bookId | string | ID of the book to update | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+````
+The user can update at least one field mentioned below. The fields that are not included in the request body will not be updated.
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| book_name | string | Name of the book, limited to 50 character | No |
+| isbn | string | ISBN of the book, limited to 13 characters | No |
+| author_ids | array of strings | All the IDs of the authors of the book | No |
+| genre_ids | array of strings | All the IDs of the genres of the book | No |
+| published_year | string | Publishing year of the book, limited to 4 characters | No |
+| description | string | Short summary of the book, limited to 1000 characters | No |
+| image_url | string | URL of the book cover image | No |
+| borrowing_period | string | Number of days that the user can borrow the book | No |
+| quantity | string | Number of copies of the book | No |
 
+```
 # Request body 
 {
   "book_name": "Catcher in the Rye",
@@ -180,7 +237,9 @@ PUT /books/:bookId
   "borrowing_period": 30,
   "quantity": 3
 }
+```
 
+```
 # Response body 
 {
   "book_id": {bookId},
@@ -197,14 +256,22 @@ PUT /books/:bookId
 ```
 
 #### Delete book
+This endpoint is only allowed for librarian to delete a book from the database.
 ```
 DELETE /books/:bookId
-
+````
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| bookId | string | ID of the book to delete | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body 
 {
   "message": "Book is deleted successfully"
@@ -213,9 +280,20 @@ DELETE /books/:bookId
 
 ### Author endpoints
 #### Get all authors
+This endpoint is used to query all authors from the database.
 ```
 GET /authors?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| keyword | string | Keyword to search for, default value is '' | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+
+```
 # Response body
 [
   {
@@ -231,9 +309,16 @@ GET /authors?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={
 ```
 
 #### Get author by id
+This endpoint is used to query one specific author from the database.
 ```
 GET /authors/:authorId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| authorId | string | ID of the author to query | Yes |
+
+```
 # Response body
 {
   "id": 1,
@@ -245,17 +330,31 @@ GET /authors/:authorId
 This endpoint is only allowed for librarian to add a new author to the database.
 ```
 POST /authors
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| authorId | string | ID of the author to query | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
+```
+The request body should contain the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| author_name | string | Name of the author, limited to 50 character | Yes |
 
+```
 # Request body
 {
   "author_name": "J. D. Salinger",
 }
+```
 
+```
 # Response body
 {
   "id": 1,
@@ -267,17 +366,27 @@ POST /authors
 This endpoint is only allowed for librarian to update an author in the database.
 ```
 PUT /authors/:authorId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| authorId | string | ID of the author to update | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
-
+```
+The author name can be updated using the following request body:
+```
 # Request body
 {
   "author_name": "J. D. Salinger",
 }
+```
 
+```
 # Response body
 {
   "id": {authorId},
@@ -289,12 +398,19 @@ PUT /authors/:authorId
 This endpoint is only allowed for librarian to delete an author from the database.
 ```
 DELETE /authors/:authorId
-
+```
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| authorId | string | ID of the author to delete | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "Author is deleted successfully"
@@ -303,9 +419,20 @@ DELETE /authors/:authorId
 
 ### Genre endpoints
 #### Get all genres
+This endpoint is used to query all genres from the database.
 ```
 GET /genres?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| keyword | string | Keyword to search for, default value is '' | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+
+```
 # Response body
 [
   {
@@ -321,9 +448,16 @@ GET /genres?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={r
 ```
 
 #### Get genre by id
+This endpoint is used to query one specific genre from the database using its ID.
 ```
 GET /genres/:genreId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| genreId | string | ID of the genre to query | Yes |
+
+```
 # Response body
 {
   "id": 1,
@@ -335,17 +469,27 @@ GET /genres/:genreId
 This endpoint is only allowed for librarian to add a new genre to the database.
 ```
 POST /genres
-
+```
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
+```
+The request body should contain the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| genre_name | string | Name of the genre, limited to 50 character | Yes |
 
+```
 # Request body
 {
   "genre_name": "Novel",
 }
+```
 
+```
 # Response body
 {
   "id": 1,
@@ -357,17 +501,26 @@ POST /genres
 This endpoint is only allowed for librarian to update a genre in the database.
 ```
 PUT /genres/:genreId
-
+```
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| genreId | string | ID of the genre to update | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
-
+```
+The genre name can be updated using the following request body:
+```
 # Request body
 {
   "genre_name": "Novel",
 }
+```
 
+```
 # Response body
 {
   "id": {genreId},
@@ -379,12 +532,19 @@ PUT /genres/:genreId
 This endpoint is only allowed for librarian to delete a genre from the database.
 ```
 DELETE /genres/:genreId
-
+```
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| genreId | string | ID of the genre to delete | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "Genre is deleted successfully"
@@ -395,16 +555,26 @@ DELETE /genres/:genreId
 #### Register
 ```
 POST /auth/register
-
+````
+The user can resgister as a customer of a library using the following request body and fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| first_name | string | First name of the user, limited to 30 character | Yes |
+| last_name | string | Last name of the user, limited to 30 character | Yes |
+| password | string | Password of the user, limited to 20 character | Yes |
+| email | string | Email of the user, email should be unique | Yes |
+For the security reason, the role of the user registering via this endpoint will be set to 'customer' by default.
+```
 # Request body
 {
   "first_name": "John",
   "last_name": "Doe",
   "password": "password",
   "email": "email",
-  "role": "customer"
 }
+```
 
+```
 # Response body
 {
   "message": "User is registered successfully"
@@ -412,15 +582,24 @@ POST /auth/register
 ```
 
 #### Login
+The customer of the library can login using this end point.
 ```
 POST /auth/login
-
+```
+To login, the user should provide the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| email | string | Email of the user | Yes |
+| password | string | Password of the user | Yes |
+```
 # Request body
 {
   "email": "email",
   "password": "password"
 }
+```
 
+```
 # Response body
 {
   "message": "User is logged in successfully",
@@ -429,14 +608,19 @@ POST /auth/login
 ```
 
 #### Logout
+The customer of the library can logout using this end point.
 ```
 POST /auth/logout
-
+```
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "User is logged out successfully"
@@ -448,12 +632,25 @@ POST /auth/logout
 This endpoint is only allowed for librarian to query all users from the database.
 ```
 GET /users?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| keyword | string | Keyword to search for, default value is '' | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+The user will be authenticated using JWT token sent in the request header.
+
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 [
   {
@@ -473,15 +670,23 @@ GET /users?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={re
 ```
 
 #### Get a user by id
-This endpoint is only allowed for librarian to query one spcific user from the database and the user to see his/her own profile.
+This endpoint is only allowed for librarian to query one specific user from the database and the customer to see his/her own profile. If the user is a librarian, s/he has to provide the ID of the user that s/he wants to query. If the user is a customer, his/her ID will be taken from his/her JWT token.
 ```
 GET /users/:userId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| userId | string | ID of the user to query | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "first_name": "John",
@@ -491,15 +696,33 @@ GET /users/:userId
 ```
 
 #### Get all loans from a user
-This endpoint is only allowed for librarian to query all loans from the database or the user to see his/her own loans. 
+This endpoint is only allowed for librarian to query all loans from the database or the customer to see his/her own loans. If the user is a librarian, s/he has to provide the ID of the user that s/he wants to see all of his/her loans. If the user is a customer, his/her ID will be taken from his/her JWT token.
 ```
 GET /users/:userId/loans?startDate={start_date}&endDate={end_date}&isReturned={is_returned}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| userId | string | ID of the user to query | Yes |
+
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| start_date | string | Starting date from which the user wants to get all the loans, default value is null | No |
+| end_date | string | Ending date to which the user wants to get all the loans, default value is null | No |
+| is_returned | string | Whether the book is returned or not, default value is false | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body 
 [
   {
@@ -521,15 +744,33 @@ GET /users/:userId/loans?startDate={start_date}&endDate={end_date}&isReturned={i
 ```
 
 #### Get all fines from a user
-This endpoint is only allowed for librarian to query all fines from the database or the user to see his/her own fines.
+This endpoint is only allowed for librarian to query all fines from the database or the customer to see his/her own fines. If the user is a librarian, s/he has to provide the ID of the user that s/he wants to see all of his/her fines. If the user is a customer, his/her ID will be taken from his/her JWT token.
 ```
 GET /users/:userId/fines?startDate={start_date}&endDate={end_date}&isPaid={is_paid}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| userId | string | ID of the user to query | Yes |
+
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| start_date | string | Starting date from which the user wants to get all the fines, default value is null | No |
+| end_date | string | Ending date to which the user wants to get all the fines, default value is null | No |
+| is_paid | string | Whether the fine is paid or not, default value is false | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 [
   {
@@ -551,14 +792,29 @@ GET /users/:userId/fines?startDate={start_date}&endDate={end_date}&isPaid={is_pa
 ```
 
 #### Update a user
+This endpoint is only allowed for customer to update his/her own profile. 
 ```
 PUT /users/:userId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| userId | string | ID of the user to update, will be taken directly from the token | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
-
+```
+The user can update at least one field mentioned below. The fields that are not included in the request body will not be updated.
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| first_name | string | First name of the user, limited to 30 character | No |
+| last_name | string | Last name of the user, limited to 30 character | No |
+| password | string | Password of the user, limited to 20 character | No |
+| email | string | Email of the user, email should be unique | No |  
+```
 # Request body
 {
   "first_name": "John",
@@ -574,15 +830,23 @@ PUT /users/:userId
 ```
 
 #### Delete a user
-This endpoint is only allowed for librarian to delete one spcific user from the database or the user to delete his/her own account.
+This endpoint is only allowed the user to delete his/her own account.
 ```
 DELETE /users/:userId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| userId | string | ID of the user to delete, will be taken directly from the token | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "User is deleted successfully"
@@ -591,15 +855,29 @@ DELETE /users/:userId
 
 ### Loan endpoints
 #### Get all loans from all users
-This endpoint is only allowed for librarian to query all loans from the database.
+This endpoint is only allowed for librarian to query all loans of all users from the database.
 ```
 GET /loans?startDate={start_date}&endDate={end_date}&isReturned={is_returned}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| start_date | string | Starting date from which the user wants to get all the loans, default value is null | No |
+| end_date | string | Ending date to which the user wants to get all the loans, default value is null | No |
+| is_returned | string | Whether the book is returned or not, default value is false | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 [
   {
@@ -623,15 +901,23 @@ GET /loans?startDate={start_date}&endDate={end_date}&isReturned={is_returned}&so
 ```
 
 #### Get a loan by id
-This endpoint is only allowed for librarian to query one specific loan from the database.
+This endpoint is only allowed for librarian to query one specific loan from the database using the ID of the loan or for customer to see a selected loan only if s/he is the owner of the loan.
 ```
 GET /loans/:loanId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| loanId | string | ID of the loan to query | Yes |
+The user will be authenticated using JWT token sent in the request header. In case that the user's role is customer, his/her ID will be taken from the token and cross-checked with the user_id of the loan.
+```
 # Headers
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "loan_id": {loanId},
@@ -647,17 +933,26 @@ GET /loans/:loanId
 This endpoint is used when the user borrows a book.
 ```
 POST /loans
-
+```
+The JWT token is required to get the user ID, and it should be sent in the request header in the following format.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
-
+```
+The request body should contain the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| book_id | string | ID of the book to borrow | Yes |
+```
 # Request body
 {
   "book_id": 1,
 }
+```
 
+```
 # Response body
 {
   "loan_id": 1,
@@ -670,20 +965,41 @@ POST /loans
 ```
 
 #### Update a loan
-This endpoint is used when the user wants to extends the due date for a certain book.
+This endpoint is used when the user wants to extends the due date for a certain book. The user can only extend the due date 10 times at most. THis end point can also be used when the user returns a book.
 ```
 PUT /loans/:loanId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| loanId | string | ID of the loan to update | Yes |
+The user will be authenticated using JWT token sent in the request header. The token is required to get the user ID.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
-
-# Request body
+```
+The request body should contain the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| book_id | string | ID of the book to extend | Yes |
+```
+# Request body in case the user wants to extend the due date
 {
   "book_id": 1,
 }
+```
 
+```
+# Request body in case the user wants to return the book
+{
+  "book_id": 1,
+  "returned_date": "2023-07-09",
+}
+```
+
+```
 # Response body
 {
   "loan_id": {loanId},
@@ -691,7 +1007,7 @@ PUT /loans/:loanId
   "book_id": 1,
   "borrow_date": "2023-07-01",
   "return_date": null, # null if the book is not returned yet
-  "due_date": "2023-09-01" # due_date is the borrow_date + borrowing_period of the book
+  "due_date": "2023-09-01" # new due_date is the old due_date + borrowing_period of the book
 }
 ```
 
@@ -699,12 +1015,19 @@ PUT /loans/:loanId
 This endpoint is used by the librarian to delete a loan from the database.
 ```
 DELETE /loans/:loanId
-
+```
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| loanId | string | ID of the loan to delete | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Headers 
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "Loan is deleted successfully"
@@ -713,15 +1036,29 @@ DELETE /loans/:loanId
 
 ### Fine endpoints
 #### Get all fines from all users
-This endpoint is only allowed for librarian to query all fines from the database.
+This endpoint is only allowed for librarian to query all fines of all the users from the database.
 ```
 GET /fines?startDate={start_date}&endDate={end_date}&isPaid={is_paid}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| start_date | string | Starting date from which the user wants to get all the fines, default value is null | No |
+| end_date | string | Ending date to which the user wants to get all the fines, default value is null | No |
+| is_paid | string | Whether the fine is paid or not, default value is false | No |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 [
   {
@@ -749,15 +1086,23 @@ GET /fines?startDate={start_date}&endDate={end_date}&isPaid={is_paid}&sortBy={so
 ```
 
 #### Get a fine by id
-This endpoint is only allowed for librarian to query one specific fine from the database.
+This endpoint is only allowed for librarian to query one specific fine from the database or for the customer to see the selected fine only if s/he is the owner of that fine.
 ```
 GET /fines/:fineId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| fineId | string | ID of the fine to query | Yes |
+The user will be authenticated using JWT token sent in the request header. In case that the user's role is customer, his/her ID will be taken from the token and cross-checked with the user_id of the fine.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "id": {fineId},
@@ -772,20 +1117,30 @@ GET /fines/:fineId
 ```
 
 #### Create a fine
-This endpoint is used when the user does not return a book after the due date.
+This endpoint is used when the user does not return a book after the due date and is used only by the librarian.
 ```
 POST /fines
-
+```
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
+The request body should contain the following fields:
 
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| loan_id | string | ID of the overdue loan to create a fine | Yes |
+```
 # Request body
 {
   "loan_id": 1,
 }
+```
 
+```
 # Response body
 {
   "id": {fineId},
@@ -798,21 +1153,35 @@ POST /fines
 ```
 
 #### Update a fine
-This endpoint is used when the user pays the fine.
+This endpoint is used when the customer pays the fine.
 ```
 PUT /fines/:fineId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| fineId | string | ID of the fine to update | Yes |
+The user will be authenticated using JWT token sent in the request header. The token is required to get the user ID and cross-check with the user_id of the fine.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
-
+```
+The request body should contain the following fields:
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| loan_id | string | ID of the overdue loan to create a fine | Yes |
+| payment_date | string | Date when the fine is paid | Yes |
+```
 # Request body
 {
   "loan_id": 1,
   "payment_date": "2023-07-09",
 }
+```
 
+```
 # Response body
 {
   "id": {fineId},
@@ -828,12 +1197,19 @@ PUT /fines/:fineId
 This endpoint is used by the librarian to delete a fine from the database.
 ```
 DELETE /fines/:fineId
-
+```
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| fineId | string | ID of the fine to delete | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "Fine is deleted successfully"
@@ -841,43 +1217,37 @@ DELETE /fines/:fineId
 ```
 
 ### Review endpoints
-#### Get all reviews from a book
-```
-GET /books/:bookId/reviews?startDate={start_date}&endDate={end_date}&sortBy={sorting-condition}&order={order}&perPage={results_per_page}&offset={offset}
-
-# Response body
-[
-  {
-    "id": "id",
-    "user_name": "John Doe",
-    "rating": 5,
-    "comment": "This is a great book"
-  },
-  {
-    "id": "id",
-    "user_name": "Jane Doe",
-    "rating": 4,
-    "comment": "What a wonderful story!!!"
-  },
-  ...
-]
-```
-
 #### Create a review
+This endpoint is used when the user wants to review a book.
 ```
 POST /books/:bookId/reviews
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| bookId | string | ID of the book to review | Yes |
+The user will be authenticated using JWT token sent in the request header. The user ID will also be taken from the token to identify the owner of the review.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
+The request body should contain the following fields:
 
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| rating | string | Rating of the book, can be 1, 2, 3, 4, or 5 | Yes |
+| comment | string | Comment of the user, limited to 500 character | No |
+```
 # Request body
 {
   "rating": 5,
   "comment": "This is a great book"
 }
+```
 
+```
 # Response body
 {
   "id": 1,
@@ -889,20 +1259,37 @@ POST /books/:bookId/reviews
 ```
 
 #### Update a review
+This endpoint is used when the user wants to edit his/her review.
 ```
 PUT /books/:bookId/reviews/:reviewId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| bookId | string | ID of the book to review | Yes |
+| reviewId | string | ID of the review to update | Yes |
+The user will be authenticated using JWT token sent in the request header. The user ID will also be taken from the token to cross-check with the ID of the owner of the review.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
+The request body can contain at least one of the following fields:
 
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| rating | string | Rating of the book, can be 1, 2, 3, 4, or 5 | Yes |
+| comment | string | Comment of the user, limited to 500 character | No |
+```
 # Request body
 {
   "rating": 5,
   "comment": "This is a great book"
 }
+```
 
+```
 # Response body
 {
   "id": {reviewId},
@@ -914,14 +1301,24 @@ PUT /books/:bookId/reviews/:reviewId
 ```
 
 #### Delete a review
+This endpoint is used when the user wants to delete his/her review.
 ```
 DELETE /books/:bookId/reviews/:reviewId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| bookId | string | ID of the book to review | Yes |
+| reviewId | string | ID of the review to delete | Yes |
+The user will be authenticated using JWT token sent in the request header. The user ID will also be taken from the token to cross-check with the ID of the owner of the review.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "Review is deleted successfully"
@@ -930,15 +1327,26 @@ DELETE /books/:bookId/reviews/:reviewId
 
 ### Role endpoints
 #### Get all roles
-This endpoint is only allowed for librarian to query all roles from the database.
+This endpoint is only allowed for admin to query all roles from the database. The pre-defined roles are 'Librarian', 'Customer' and 'Admin'.
 ```
-GET /roles?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+GET /roles?sortBy={sorting_condition}&order={order}&perPage={results_per_page}&offset={offset}
+```
 
+| Query | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| sorting_condition | string | Sorting condition, default value is 'None' | No |
+| order | string | Sorting order, can be 'ASC' or 'DESC' order, default value is 'DESC' | No |
+| results_per_page | string | Number of results to be displayed per page, default value is '25' | No |
+| offset | string | Number of results to be skipped, default value is '0' | No |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 [
   {
@@ -954,15 +1362,22 @@ GET /roles?search={keyword}&sortBy={sorting_condition}&order={order}&perPage={re
 ```
 
 #### Get a role by id
-This endpoint is only allowed for librarian to query one specific role from the database.
+This endpoint is only allowed for admin to query one specific role from the database using its ID.
 ```
 GET /roles/:roleId
-
+```
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| roleId | string | ID of the role to query | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "id": 1,
@@ -971,20 +1386,30 @@ GET /roles/:roleId
 ```
 
 #### Create a role
-This endpoint is only allowed for librarian to add a new role to the database.
+This endpoint is only allowed for admin to add a new role to the database.
 ```
 POST /roles
+```
 
+| Value | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| role_name | string | Name of the role, limited to 50 character | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Request body
 {
   "role_name": "Librarian",
 }
+```
 
+```
 # Response body
 {
   "id": 1,
@@ -993,20 +1418,30 @@ POST /roles
 ```
 
 #### Update a role
-This endpoint is only allowed for librarian to update a role in the database.
+This endpoint is only allowed for admin to update a role in the database.
 ```
 PUT /roles/:roleId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| roleId | string | ID of the role to update | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
-
+```
+The role name can be updated using the following request body:
+```
 # Request body
 {
   "role_name": "Librarian",
 }
+```
 
+```
 # Response body
 {
   "id": {roleId},
@@ -1015,15 +1450,23 @@ PUT /roles/:roleId
 ```
 
 #### Delete a role
-This endpoint is only allowed for librarian to delete a role from the database.
+This endpoint is only allowed for admin to delete a role from the database.
 ```
 DELETE /roles/:roleId
+```
 
+| Param | Type | Description | Required |
+| ----------- | ----------- | ----------- | ----------- |
+| roleId | string | ID of the role to delete | Yes |
+The user will be authenticated using JWT token sent in the request header.
+```
 # Header
 {
   "Authorization": "Bearer {token}"
 }
+```
 
+```
 # Response body
 {
   "message": "Role is deleted successfully"
