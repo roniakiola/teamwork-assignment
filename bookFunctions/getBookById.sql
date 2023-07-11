@@ -29,10 +29,10 @@ RETURN QUERY
        b.publishing_year,
        COALESCE(ROUND(AVG(r.rating), 2), 0) AS avg_rating,
        b._description, b.image_url, ARRAY_AGG(r.comment) AS reviews, b.borrowing_period, b.quantity
-FROM books b
-LEFT JOIN reviews r ON b.id = r.book_id
-WHERE b.id = input_id
-GROUP BY b.id;
+  FROM books b
+  LEFT JOIN reviews r ON b.id = r.book_id
+  WHERE b.id = input_id
+  GROUP BY b.id;
 END;
 $$
 LANGUAGE plpgsql;
