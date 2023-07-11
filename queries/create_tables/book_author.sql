@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS public.book_author
 (
-    book_id integer,
+    book_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
     author_id integer,
     CONSTRAINT author_id FOREIGN KEY (author_id)
         REFERENCES public.authors (id) MATCH SIMPLE

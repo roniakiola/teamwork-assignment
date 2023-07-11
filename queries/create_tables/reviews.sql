@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS public.reviews
 (
-    id integer NOT NULL,
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
     comment character varying COLLATE pg_catalog."default",
     rating smallint,
     book_id integer,
