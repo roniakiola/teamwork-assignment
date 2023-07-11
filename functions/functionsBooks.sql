@@ -135,6 +135,12 @@ SELECT create_book(
   5
 );
 
+--Update book
+CREATE OR REPLACE FUNCTION update_book(
+  book_id INT,
+  book_name VARCHAR()
+)
+
 
 
 
