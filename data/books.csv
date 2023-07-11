@@ -1,0 +1,6 @@
+book_name,isbn,publishing_year,description,image_url,borrowing_period,quantity
+Book 1,9781234567890,2022,Description of Book 1,https://example.com/book1.jpg,14,5
+Book 2,9780987654321,2020,Description of Book 2,https://example.com/book2.jpg,21,3
+Book 3,9785678901234,2019,Description of Book 3,https://example.com/book3.jpg,7,10
+Book 4,9780123456789,2021,Description of Book 4,https://example.com/book4.jpg,14,2
+Book 5,9785432109876,2018,Description of Book 5,https://example.com/book5.jpg,30,8
