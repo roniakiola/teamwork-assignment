@@ -138,8 +138,20 @@ SELECT create_book(
 --Update book
 CREATE OR REPLACE FUNCTION update_book(
   book_id INT,
-  book_name VARCHAR()
+  book_name VARCHAR(50) = NULL,
+  isbn VARCHAR(13) = NULL,
+  author_ids INT[] = NULL,
+  genre_ids INT[] = NULL,
+  publishing_year INT = NULL,
+  _description VARCHAR(1000) = NULL,
+  image_url VARCHAR = NULL,
+  borrowing_period INT = NULL,
+  quantity INT = NULL
 )
+RETURNS INT
+AS $$
+DECLARE
+
 
 
 
