@@ -1,6 +1,6 @@
 --Update book
 CREATE OR REPLACE FUNCTION update_book(
-  p_user_id INT
+  p_user_id INT,
   p_book_id INT,
   p_book_name VARCHAR(50) = NULL,
   p_isbn VARCHAR(13) = NULL,
