@@ -1,5 +1,3 @@
-
-
 # Teamwork
 Designing REST API endpoints and database schema
 
@@ -15,7 +13,11 @@ Designing REST API endpoints and database schema
 1. Task manegement 
 2. Git version control
 
+## ERD diagram
+![Screen Shot 2023-07-10 at 11 12 24 PM](https://github.com/LeeRichi/fs15_teamwork_team_2/assets/86901868/5a274048-2dad-4291-a763-ff1c1a6b9ea1)
+
 ## Folder tree
+````
 .
 ├── ERD
 │   └── ERD.png
@@ -100,6 +102,8 @@ Designing REST API endpoints and database schema
             ├── login_user.sql
             ├── logout_user.sql
             └── register_user.sql
+````
+
 
 ## Requirements checklist
 1. Create ERD diagram with proper entities, attributes, and relationship. The ERD can be added to the project as image.:white_check_mark:
