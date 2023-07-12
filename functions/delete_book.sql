@@ -7,12 +7,6 @@ BEGIN
     RAISE EXCEPTION 'Book with ID % does not exist.', p_book_id;
   END IF;
 
-  DELETE FROM book_author
-  WHERE book_id = p_book_id;
-
-  DELETE FROM book_genre
-  WHERE book_id = p_book_id;
-
   DELETE FROM books
   WHERE id = p_book_id;
   
