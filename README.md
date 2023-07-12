@@ -1,4 +1,4 @@
-You are in team_2.
+
 
 # Teamwork
 Designing REST API endpoints and database schema
