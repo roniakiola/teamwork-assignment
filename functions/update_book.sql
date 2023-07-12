@@ -1,5 +1,6 @@
 --Update book
 CREATE OR REPLACE FUNCTION update_book(
+  p_user_id INT
   p_book_id INT,
   p_book_name VARCHAR(50) = NULL,
   p_isbn VARCHAR(13) = NULL,
@@ -17,6 +18,14 @@ DECLARE
   existing_author_ids INT[];
   existing_genre_ids INT[];
 BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM users u JOIN roles r 
+    ON u.id = r.id 
+    WHERE u.id = p_user_id 
+    AND r.name = 'Admin'
+    ) THEN RAISE EXCEPTION 'User is not authorized';
+  END IF;
+
   IF NOT EXISTS (SELECT 1 FROM books WHERE id = p_book_id) THEN
     RAISE EXCEPTION 'Book with ID % does not exist.', p_book_id;
   END IF;
