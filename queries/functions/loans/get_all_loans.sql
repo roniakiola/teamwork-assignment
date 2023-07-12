@@ -1,24 +1,22 @@
-CREATE OR REPLACE FUNCTION get_all_roles(
+CREATE OR REPLACE FUNCTION get_all_loans(
   sort_column TEXT DEFAULT 'id',
   sort_order TEXT DEFAULT 'ASC',
-  filter_column TEXT DEFAULT NULL,
-  filter_value TEXT DEFAULT NULL,
   page_number INTEGER DEFAULT 1,
   page_limit INTEGER DEFAULT 10
 )
 RETURNS TABLE (
   id INTEGER,
-  name CHARACTER VARYING(30)
+  borrowed_date DATE,
+  returned_date DATE,
+  due_date DATE,
+  book_id INTEGER,
+  user_id INTEGER
 )
 AS $$
 BEGIN
   RETURN QUERY
-  SELECT roles.id, roles.name
-  FROM roles
-  WHERE 
-    CASE WHEN filter_column IS NOT NULL THEN
-    filter_column ILIKE '%' || filter_value || '%'
-    ELSE TRUE END
+  SELECT loans.id, loans.borrowed_date, loans.returned_date, loans.due_date, loans.book_id, loans.user_id
+  FROM loans
   ORDER BY sort_column || ' ' || sort_order
   LIMIT page_limit OFFSET (page_number - 1) * page_limit;
 END;
