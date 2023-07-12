@@ -9,7 +9,6 @@ BEGIN
   INSERT INTO authors (author_name)
   VALUES (p_author_name)
     RETURNING id INTO author_id;
-    -- RETURN id;
 END;
 $$ LANGUAGE plpgsql;
 
