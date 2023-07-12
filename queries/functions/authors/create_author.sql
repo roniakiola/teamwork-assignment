@@ -4,12 +4,12 @@ CREATE OR REPLACE FUNCTION create_author(
 RETURNS VOID
 AS $$
 DECLARE
-  user_id INTEGER;
+  author_id INTEGER;
 BEGIN
   INSERT INTO authors (author_name)
-  VALUES (p_author_name);
-    RETURNING id INTO id;
-    RETURN id;
+  VALUES (p_author_name)
+    RETURNING id INTO author_id;
+    -- RETURN id;
 END;
 $$ LANGUAGE plpgsql;
 

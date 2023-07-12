@@ -1,6 +1,6 @@
 CREATE OR REPLACE FUNCTION login_user(
-  email TEXT,
-  password TEXT
+  p_email TEXT,
+  p_password TEXT
 )
 RETURNS BOOLEAN
 AS $$
@@ -10,8 +10,8 @@ BEGIN
   SELECT EXISTS(
     SELECT 1
     FROM users
-    WHERE email = login_user.email
-      AND password = login_user.password
+    WHERE email = p_email
+      AND password = p_password
   ) INTO is_valid;
 
   RETURN is_valid;
@@ -20,4 +20,4 @@ $$ LANGUAGE plpgsql;
 
 
 
-SELECT login_user(johndoe@example.com, 'pass123');
+SELECT login_user('johndoe@example.com', 'pass123');

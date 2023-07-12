@@ -6,3 +6,6 @@ BEGIN
   RETURN TRUE;
 END;
 $$ LANGUAGE plpgsql;
+
+
+SELECT logout_user();
