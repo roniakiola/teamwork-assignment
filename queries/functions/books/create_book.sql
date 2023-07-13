@@ -57,14 +57,14 @@ LANGUAGE plpgsql;
 
 --USAGE EXAMPLE:
 SELECT create_book(
-  2,
-  'Shouldnt bbe possible',
-  '9780123456789',
-  ARRAY[1, 3], -- Author IDs
-  ARRAY[2, 4], -- Genre IDs
-  2023,
-  'Description of Book 6',
-  'https://example.com/book6.jpg',
+  1,
+  'Hobbit',
+  '123123123123',
+  ARRAY[1], -- Author IDs
+  ARRAY[1], -- Genre IDs
+  1950,
+  'Description of Hobbit',
+  'https://example.com/hobbit.jpg',
   14,
-  5
+  4
 );

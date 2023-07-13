@@ -11,6 +11,27 @@ CREATE TABLE IF NOT EXISTS public.books
     CONSTRAINT books_pkey PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS public.authors
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    author_name character varying(30), 
+    CONSTRAINT authors_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.genres
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    genre_name character varying(30) COLLATE pg_catalog."default",
+    CONSTRAINT genres_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS public.roles
+(
+    id integer GENERATED ALWAYS AS IDENTITY,
+    name character varying(30) COLLATE pg_catalog."default",
+    CONSTRAINT roles_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS public.users
 (
     id integer GENERATED ALWAYS AS IDENTITY,
@@ -25,13 +46,6 @@ CREATE TABLE IF NOT EXISTS public.users
         ON UPDATE CASCADE
         ON DELETE CASCADE
         NOT VALID
-);
-
-CREATE TABLE IF NOT EXISTS public.genres
-(
-    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-    genre_name character varying(30) COLLATE pg_catalog."default",
-    CONSTRAINT genres_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE IF NOT EXISTS public.reviews
@@ -91,19 +105,9 @@ CREATE TABLE IF NOT EXISTS public.fine
         NOT VALID
 );
 
-ALTER TABLE public.roles
-ALTER COLUMN id integer GENERATED ALWAYS AS IDENTITY;
-
-CREATE TABLE IF NOT EXISTS public.roles
-(
-    id integer GENERATED ALWAYS AS IDENTITY,
-    name character varying(30) COLLATE pg_catalog."default",
-    CONSTRAINT roles_pkey PRIMARY KEY (id)
-);
-
 CREATE TABLE IF NOT EXISTS public.book_genre
 (
-    book_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    book_id integer,
     genre_id integer,
     CONSTRAINT book_id FOREIGN KEY (book_id)
         REFERENCES public.books (id) MATCH SIMPLE
@@ -119,7 +123,7 @@ CREATE TABLE IF NOT EXISTS public.book_genre
 
 CREATE TABLE IF NOT EXISTS public.book_author
 (
-    book_id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
+    book_id integer,
     author_id integer,
     CONSTRAINT author_id FOREIGN KEY (author_id)
         REFERENCES public.authors (id) MATCH SIMPLE
@@ -129,13 +133,6 @@ CREATE TABLE IF NOT EXISTS public.book_author
         REFERENCES public.books (id) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS public.authors
-(
-    id integer NOT NULL GENERATED ALWAYS AS IDENTITY,
-    author_name character varying(30), 
-    CONSTRAINT authors_pkey PRIMARY KEY (id)
 );
 
 

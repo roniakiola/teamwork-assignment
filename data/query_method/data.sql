@@ -6,6 +6,25 @@ VALUES
     ('Book 4', '9780123456789', 2021, 'Description of Book 4', 'https://example.com/book4.jpg', 14, 2),
     ('Book 5', '9785432109876', 2018, 'Description of Book 5', 'https://example.com/book5.jpg', 30, 8);
 
+INSERT INTO public.authors (author_name)
+VALUES 
+    ('Jennifer Adams'),
+    ('Benjamin Martin'),
+    ('Emily Thompson'),
+    ('Samuel Davis');
+
+INSERT INTO public.genres (genre_name)
+VALUES 
+    ('Fiction'),
+    ('Romance'),
+    ('Mystery'),
+    ('Science Fiction');
+
+INSERT INTO public.roles (name)
+VALUES 
+    ('Admin'),
+    ('Member'),
+    ('Guest');
 
 INSERT INTO public.users (first_name, last_name, email, password, role)
 VALUES 
@@ -14,19 +33,12 @@ VALUES
     ('Alice', 'Johnson', 'alicejohnson@example.com', 'pass789', 2),
     ('Bob', 'Williams', 'bobwilliams@example.com', 'pass321', 3);
 
-INSERT INTO public.roles (name)
+INSERT INTO public.reviews (comment, rating, book_id, user_id)
 VALUES 
-    ('Admin'),
-    ('Member'),
-    ('Guest');
-
-
-INSERT INTO public.fine (created_date, due_date, payment_date, balance, loan_id)
-VALUES 
-    ('2022-07-01', '2022-07-15', '2022-07-16', ARRAY[25.00], 1),
-    ('2022-08-01', '2022-08-10', '2022-08-12', ARRAY[15.50], 2),
-    ('2022-09-01', '2022-09-05', NULL, ARRAY[10.00], 3);
-
+    ('Great book!', 5, 1, 1),
+    ('Enjoyed reading it.', 4, 2, 2),
+    ('Could have been better.', 3, 3, 1),
+    ('Highly recommended!', 5, 1, 3);
 
 INSERT INTO public.loans (borrowed_date, returned_date, due_date, book_id, user_id)
 VALUES 
@@ -34,42 +46,24 @@ VALUES
     ('2022-08-01', '2022-08-08', '2022-08-10', 2, 2),
     ('2022-09-01', '2022-09-04', '2022-09-05', 3, 3);
 
-
-INSERT INTO public.authorauthor_name)
+INSERT INTO public.fine (created_date, due_date, payment_date, balance, loan_id)
 VALUES 
-    ('Jennifer Adams'),
-    ('Benjamin Martin'),
-    ('Emily Thompson'),
-    ('Samuel Davis');
+    ('2022-07-01', '2022-07-15', '2022-07-16', ARRAY[25.00], 1),
+    ('2022-08-01', '2022-08-10', '2022-08-12', ARRAY[15.50], 2),
+    ('2022-09-01', '2022-09-05', NULL, ARRAY[10.00], 3);
 
-INSERT INTO public.book_author (author_id)
+INSERT INTO public.book_genre (book_id, genre_id)
 VALUES 
-    (1),
-    (2),
-    (3),
-    (2),
-    (4);
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (3, 2),
+    (3, 4);
 
-
-INSERT INTO public.genres (id, genre_name)
+INSERT INTO public.book_author (book_id, author_id)
 VALUES 
-    (1, 'Fiction'),
-    (2, 'Romance'),
-    (3, 'Mystery'),
-    (4, 'Science Fiction');
-
-INSERT INTO public.book_genre (genre_id)
-VALUES 
-    (1),
-    (2),
-    (3),
-    (2),
-    (4);
-
-
-INSERT INTO public.reviews (comment, rating, book_id, user_id)
-VALUES 
-    ('Great book!', 5, 1, 1),
-    ('Enjoyed reading it.', 4, 2, 2),
-    ('Could have been better.', 3, 3, 1),
-    ('Highly recommended!', 5, 1, 3);
+    (1, 1),
+    (1, 2),
+    (2, 3),
+    (3, 2),
+    (3, 4);
