@@ -86,4 +86,4 @@ $$
 LANGUAGE plpgsql;
 
 --USAGE EXAMPLE:
-SELECT update_book(1, 'New Book Name', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+select update_book(1, 7, NULL, NULL, NULL, ARRAY[2], NULL, 'New description of Hobbit', NULL, NULL, 6);
